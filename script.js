@@ -1,9 +1,13 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+console.log(innerHeight);
+
 canvas.width = 1024;
 canvas.height = 567;
+
 const gravity = 0.5;
+
 class Player {
   constructor(position) {
     this.position = position;
@@ -43,3 +47,43 @@ function animate() {
 }
 
 animate();
+
+const nameAlex = "Alex";
+const ageAlex = 20;
+
+const userAlex = {
+  name: "Alex",
+  age: 20,
+  color: "red",
+};
+
+const userBob = {
+  name: "Bob",
+  age: 30,
+  color: "blue",
+  showInnerMessage: function () {
+    console.log("outer function");
+    console.log(this);
+
+    (function showMessage() {
+      console.log("this of show message");
+      console.log(this);
+      const showInsetMessage = () => {
+        console.log("this of inset function");
+        console.log(this);
+      };
+      showInsetMessage();
+    }).apply(this);
+    showMessage();
+  },
+};
+
+function showMessage() {
+  console.log(this.name + " is " + this.age + " years old");
+  const showColor = () => {
+    console.log("Color is " + this.color);
+  };
+  showColor();
+}
+
+userBob.showInnerMessage();
