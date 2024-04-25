@@ -1,8 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-console.log(innerHeight);
-
 canvas.width = 1024;
 canvas.height = 567;
 
@@ -48,42 +46,55 @@ function animate() {
 
 animate();
 
-const nameAlex = "Alex";
-const ageAlex = 20;
-
-const userAlex = {
-  name: "Alex",
-  age: 20,
-  color: "red",
+// function constructor
+function UserCreator(name, score) {}
+UserCreator.prototype.increment = function () {
+  this.score++;
 };
 
-const userBob = {
-  name: "Bob",
-  age: 30,
-  color: "blue",
-  showInnerMessage: function () {
-    console.log("outer function");
-    console.log(this);
+const user1 = new UserCreator("Phil", 4);
 
-    (function showMessage() {
-      console.log("this of show message");
-      console.log(this);
-      const showInsetMessage = () => {
-        console.log("this of inset function");
-        console.log(this);
-      };
-      showInsetMessage();
-    }).apply(this);
-    showMessage();
-  },
-};
+// class constructor
+class UserCreaterClass {
+  constructor(name, score) {
+    this.name = name;
+    this.score = score;
+  }
 
-function showMessage() {
-  console.log(this.name + " is " + this.age + " years old");
-  const showColor = () => {
-    console.log("Color is " + this.color);
-  };
-  showColor();
+  dicrement() {
+    this.score--;
+  }
+
+  increment() {
+    this.score++;
+  }
 }
 
-userBob.showInnerMessage();
+const user2 = new UserCreaterClass("Tim", 5);
+
+class UserFlayer extends UserCreaterClass {
+  constructor(name, score, age) {
+    super(name, score);
+    this.age = age;
+  }
+
+  fly() {
+    console.log(`I'm flying! ${this.age}, ${this.score}`);
+  }
+}
+
+class UserLander extends UserCreaterClass {
+  constructor(name, score, age) {
+    super(name, score);
+    this.newAge = age;
+  }
+
+  land() {
+    this.increment();
+    console.log(`I'm flying! ${this.name}, ${this.score}`);
+  }
+}
+
+const userFly = new UserFlayer("Will", 10, 20);
+const userLander = new UserLander("John", 101, 201);
+console.log(userLander.land());
